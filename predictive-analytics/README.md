@@ -153,7 +153,7 @@ Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyel
 
 Lasso Regression, or Least Absolute Shrinkage and Selection Operator, is a type of linear regression that uses L1 regularization. The objective function for Lasso Regression is:
 
-$$ minimize \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right) $$
+$$ \text{minimize} \left( \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \alpha \sum_{j=1}^{p} | \beta_j | \right) $$
 
 Where:
 
@@ -233,7 +233,7 @@ XGBoost (Extreme Gradient Boosting) is an optimized distributed gradient boostin
 
 The objective function for XGBoost in regression is:
 
-$$\text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right)$$
+$$ \text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right) $$
 
 Where:
 
