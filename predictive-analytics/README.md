@@ -232,7 +232,9 @@ XGBoost (Extreme Gradient Boosting) is an optimized distributed gradient boostin
 
 The objective function for XGBoost in regression is:
 
-$$ \text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right) $$
+$$
+\text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right)
+$$
 
 Where:
 
@@ -311,9 +313,9 @@ $$ R^2_{\text{train}} = 1 - \frac{SS_{\text{res, train}}}{SS_{\text{tot, train}}
 
 Where:
 
-- $$ SS_{\text{res, train}} $$ is the sum of squares of residuals for the training data.
+- $SS_{\text{res, train}}$ is the sum of squares of residuals for the training data.
 
-- $$ SS_{\text{tot, train}} $$ is the total sum of squares for the training data.
+- $SS_{\text{tot, train}}$ is the total sum of squares for the training data.
 
 ##### R-squared (R²) for Test Data
 
@@ -323,9 +325,9 @@ $$ R^2_{\text{test}} = 1 - \frac{SS_{\text{res, test}}}{SS_{\text{tot, test}}} $
 
 Where:
 
-- $$ SS_{\text{res, test}} $$ is the sum of squares of residuals for the test data.
+- $SS_{\text{res, test}}$ is the sum of squares of residuals for the test data.
 
-- $$ SS_{\text{tot, test}} $$ is the total sum of squares for the test data.
+- $SS_{\text{tot, test}}$ is the total sum of squares for the test data.
 
 ### Mean Squared Error (MSE)
 
