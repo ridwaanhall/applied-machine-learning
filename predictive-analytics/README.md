@@ -323,9 +323,11 @@ $$ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$
 
 Where:
 
-- \(n\): The total number of observations.
-- \(y_i\): The actual value for observation \(i\).
-- \(\hat{y}_i\): The predicted value for observation \(i\).
+- $y_i$ is the actual value.
+
+- $\hat{y}_i$ is the predicted value.
+
+- $n$ is the number of data points.
 
 ### Explaining Project Results Based on Evaluation Metrics
 
