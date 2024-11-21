@@ -113,7 +113,7 @@ Next, let's describe all the variables or features in the data.
 
     The formula for standardizing data using the `StandardScaler` is:
 
-    $z = \frac{x - \mu}{\sigma}$
+    $$ z = \frac{x - \mu}{\sigma} $$
 
     Where:
 
