@@ -153,21 +153,21 @@ Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyel
 
 Lasso Regression, or Least Absolute Shrinkage and Selection Operator, is a type of linear regression that uses L1 regularization. The objective function for Lasso Regression is:
 
-$$ \text{minimize} \left( \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \alpha \sum_{j=1}^{p} |\beta_j| \right) $$
+$$\text{minimize} \left( \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \alpha \sum_{j=1}^{p} |\beta_j| \right)$$
 
 Where:
 
-- \( y_i \) is the actual value.
+- $y_i$ is the actual value.
 
-- \( \hat{y}_i \) is the predicted value.
+- $\hat{y}_i$ is the predicted value.
 
-- \( n \) is the number of data points.
+- $n$ is the number of data points.
 
-- \( \alpha \) is the regularization parameter.
+- $\alpha$ is the regularization parameter.
 
-- \( \beta_j \) are the coefficients of the model.
+- $\beta_j$ are the coefficients of the model.
 
-- \( p \) is the number of features.
+- $p$ is the number of features.
 
     ```python
     param_grid = {'lasso__alpha': [1e-4, 1e-3, 1e-2, 1e-1, 1, 5, 10, 20, 30, 40]}
