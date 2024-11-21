@@ -117,8 +117,11 @@ Next, let's describe all the variables or features in the data.
 
     Where:
     - $$ z $$ is the standardized value.
+
     - $$ x $$ is the original value.
+
     - $$ \mu $$ is the mean of the training samples.
+
     - $$ \sigma $$ is the standard deviation of the training samples.
 
     This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
@@ -154,10 +157,15 @@ $$ \text{minimize} \left( \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \alp
 Where:
 
 - \( y_i \) is the actual value.
+
 - \( \hat{y}_i \) is the predicted value.
+
 - \( n \) is the number of data points.
+
 - \( \alpha \) is the regularization parameter.
+
 - \( \beta_j \) are the coefficients of the model.
+
 - \( p \) is the number of features.
 
     ```python
@@ -186,7 +194,9 @@ $$ \hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t $$
 Where:
 
 - $$ \hat{y} $$ is the final prediction.
+
 - $$ T $$ is the number of trees in the forest.
+
 - $$ \hat{y}_t $$ is the prediction of the $$ t $$-th tree.
 
     ```python
@@ -227,9 +237,13 @@ $$ \text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Ome
 Where:
 
 - $l(y_i, \hat{y}_i)$ is the loss function that measures the difference between the actual value $y_i$ and the predicted value $\hat{y}_i$.
+
 - $\Omega(f_k)$ is the regularization term that penalizes the complexity of the model to prevent overfitting.
+
 - $n$ is the number of data points.
+
 - $K$ is the number of trees.
+
 - $f_k$ represents the individual trees in the model.
 
     ```python
@@ -298,6 +312,7 @@ $$ R^2_{\text{train}} = 1 - \frac{SS_{\text{res, train}}}{SS_{\text{tot, train}}
 Where:
 
 - $$ SS_{\text{res, train}} $$ is the sum of squares of residuals for the training data.
+
 - $$ SS_{\text{tot, train}} $$ is the total sum of squares for the training data.
 
 ##### R-squared (R²) for Test Data
@@ -309,6 +324,7 @@ $$ R^2_{\text{test}} = 1 - \frac{SS_{\text{res, test}}}{SS_{\text{tot, test}}} $
 Where:
 
 - $$ SS_{\text{res, test}} $$ is the sum of squares of residuals for the test data.
+
 - $$ SS_{\text{tot, test}} $$ is the total sum of squares for the test data.
 
 ### Mean Squared Error (MSE)
