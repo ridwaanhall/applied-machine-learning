@@ -233,7 +233,7 @@ XGBoost (Extreme Gradient Boosting) is an optimized distributed gradient boostin
 
 The objective function for XGBoost in regression is:
 
-\text{minimize} \quad \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)
+$$ \text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right) $$
 
 Where:
 
