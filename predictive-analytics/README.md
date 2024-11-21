@@ -116,13 +116,10 @@ Next, let's describe all the variables or features in the data.
     $$ z = \frac{x - \mu}{\sigma} $$
 
     Where:
-    - $$ z $$ is the standardized value.
-
-    - $$ x $$ is the original value.
-
-    - $$ \mu $$ is the mean of the training samples.
-
-    - $$ \sigma $$ is the standard deviation of the training samples.
+    - $ z $ is the standardized value.
+    - $ x $ is the original value.
+    - $ \mu $ is the mean of the training samples.
+    - $ \sigma $ is the standard deviation of the training samples.
 
     This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
 
@@ -193,11 +190,11 @@ $$ \hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t $$
 
 Where:
 
-- $$ \hat{y} $$ is the final prediction.
+- $ \hat{y} $ is the final prediction.
 
-- $$ T $$ is the number of trees in the forest.
+- $ T $ is the number of trees in the forest.
 
-- $$ \hat{y}_t $$ is the prediction of the $$ t $$-th tree.
+- $ \hat{y}_t $ is the prediction of the $ t $-th tree.
 
     ```python
     param_grid = {
@@ -232,7 +229,8 @@ XGBoost (Extreme Gradient Boosting) is an optimized distributed gradient boostin
 
 The objective function for XGBoost in regression is:
 
-\[ \text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right) \]
+\text{minimize} \quad \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)
+
 Where:
 
 - $l(y_i, \hat{y}_i)$ is the loss function that measures the difference between the actual value $y_i$ and the predicted value $\hat{y}_i$.
