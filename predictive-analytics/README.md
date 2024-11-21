@@ -194,11 +194,11 @@ $$ \hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t $$
 
 Where:
 
-- $ \hat{y} $ is the final prediction.
+- $\hat{y}$ is the final prediction.
 
-- $ T $ is the number of trees in the forest.
+- $T$ is the number of trees in the forest.
 
-- $ \hat{y}_t $ is the prediction of the $ t $-th tree.
+- $\hat{y}_t$ is the prediction of the $ t $-th tree.
 
     ```python
     param_grid = {
