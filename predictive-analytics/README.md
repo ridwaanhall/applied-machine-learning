@@ -111,21 +111,18 @@ Next, let's describe all the variables or features in the data.
 
 2. **Scaling the Data:**
 
-The formula for standardizing data using the `StandardScaler` is:
+    The formula for standardizing data using the `StandardScaler` is:
 
-$$ z = \frac{x - \mu}{\sigma} $$
+    $$ z = \frac{x - \mu}{\sigma} $$
 
-Where:
+    Where:
 
-- $$ z $$ is the standardized value.
+    - $$ z $$ is the standardized value.
+    - $$ x $$ is the original value.
+    - $$ \mu $$ is the mean of the training samples.
+    - $$ \sigma $$ is the standard deviation of the training samples.
 
-- $$ x $$ is the original value.
-
-- $$ \mu $$ is the mean of the training samples.
-
-- $$ \sigma $$ is the standard deviation of the training samples.
-
-This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
+    This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
 
     ```python
     scaler = StandardScaler()
