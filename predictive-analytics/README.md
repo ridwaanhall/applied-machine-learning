@@ -1,4 +1,6 @@
-# Laporan Proyek Machine Learning - Ridwan Halim
+# Machine Learning Project Report - Ridwan Halim
+
+[![wakatime](https://wakatime.com/badge/user/018b799e-de53-4f7a-bb65-edc2df9f26d8/project/45c71873-666f-4140-a133-d302f409bd33.svg)](https://wakatime.com/badge/user/018b799e-de53-4f7a-bb65-edc2df9f26d8/project/45c71873-666f-4140-a133-d302f409bd33)
 
 ## Project Domain
 
