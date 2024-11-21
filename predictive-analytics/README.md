@@ -116,10 +116,10 @@ Next, let's describe all the variables or features in the data.
     $$ z = \frac{x - \mu}{\sigma} $$
 
     Where:
-    - \( z \) is the standardized value.
-    - \( x \) is the original value.
-    - \( \mu \) is the mean of the training samples.
-    - \( \sigma \) is the standard deviation of the training samples.
+    - $$ z $$ is the standardized value.
+    - $$ x $$ is the original value.
+    - $$ \mu $$ is the mean of the training samples.
+    - $$ \sigma $$ is the standard deviation of the training samples.
 
     This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
 
@@ -153,12 +153,12 @@ $$ \text{minimize} \left( \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \alp
 
 Where:
 
-- $ y_i $ is the actual value.
-- $ \hat{y}_i $ is the predicted value.
-- $ n $ is the number of data points.
-- $ \alpha $ is the regularization parameter.
-- $ \beta_j $ are the coefficients of the model.
-- $ p $ is the number of features.
+- \( y_i \) is the actual value.
+- \( \hat{y}_i \) is the predicted value.
+- \( n \) is the number of data points.
+- \( \alpha \) is the regularization parameter.
+- \( \beta_j \) are the coefficients of the model.
+- \( p \) is the number of features.
 
     ```python
     param_grid = {'lasso__alpha': [1e-4, 1e-3, 1e-2, 1e-1, 1, 5, 10, 20, 30, 40]}
@@ -171,7 +171,7 @@ Where:
 
 Lasso Regression aims to minimize the sum of the squared residuals (the difference between the actual and predicted values) while also applying a penalty to the absolute values of the coefficients. This penalty term helps to shrink some coefficients to zero, effectively performing feature selection and reducing the complexity of the model.
 
-The regularization parameter $ \alpha $ controls the strength of the penalty. A higher value of $ \alpha $ increases the penalty, leading to more coefficients being shrunk to zero. Conversely, a lower value of $ \alpha $ reduces the penalty, making the model more similar to ordinary least squares regression.
+The regularization parameter $\alpha$ controls the strength of the penalty. A higher value of $\alpha$ increases the penalty, leading to more coefficients being shrunk to zero. Conversely, a lower value of $\alpha$ reduces the penalty, making the model more similar to ordinary least squares regression.
 
 ### RandomForestRegressor
 
@@ -185,9 +185,9 @@ $$ \hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t $$
 
 Where:
 
-- $ \hat{y} $ is the final prediction.
-- $ T $ is the number of trees in the forest.
-- $ \hat{y}_t $ is the prediction of the $ t $-th tree.
+- $$ \hat{y} $$ is the final prediction.
+- $$ T $$ is the number of trees in the forest.
+- $$ \hat{y}_t $$ is the prediction of the $$ t $$-th tree.
 
     ```python
     param_grid = {
@@ -218,17 +218,19 @@ The key parameters of RandomForestRegressor include:
 
 #### XGBoost Formula
 
-XGBoost (Extreme Gradient Boosting) is an optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable. It implements machine learning algorithms under the Gradient Boosting framework. The objective function for XGBoost in regression is:
+XGBoost (Extreme Gradient Boosting) is an optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable. It implements machine learning algorithms under the Gradient Boosting framework.
+
+The objective function for XGBoost in regression is:
 
 $$ \text{minimize} \left( \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k) \right) $$
 
 Where:
 
-- $ l(y_i, \hat{y}_i) $ is the loss function that measures the difference between the actual value $ y_i $ and the predicted value $ \hat{y}_i $.
-- $ \Omega(f_k) $ is the regularization term that penalizes the complexity of the model to prevent overfitting.
-- $ n $ is the number of data points.
-- $ K $ is the number of trees.
-- $ f_k $ represents the individual trees in the model.
+- $l(y_i, \hat{y}_i)$ is the loss function that measures the difference between the actual value $y_i$ and the predicted value $\hat{y}_i$.
+- $\Omega(f_k)$ is the regularization term that penalizes the complexity of the model to prevent overfitting.
+- $n$ is the number of data points.
+- $K$ is the number of trees.
+- $f_k$ represents the individual trees in the model.
 
     ```python
     model_xgb = XGBRegressor()
@@ -290,22 +292,24 @@ R-squared (R²), or the coefficient of determination, measures the proportion of
 ##### R-squared (R²) for Training Data
 
 The formula for R-squared on the training data is:
+
 $$ R^2_{\text{train}} = 1 - \frac{SS_{\text{res, train}}}{SS_{\text{tot, train}}} $$
 
 Where:
 
-- $ SS_{\text{res, train}} $ is the sum of squares of residuals for the training data.
-- $ SS_{\text{tot, train}} $ is the total sum of squares for the training data.
+- $$ SS_{\text{res, train}} $$ is the sum of squares of residuals for the training data.
+- $$ SS_{\text{tot, train}} $$ is the total sum of squares for the training data.
 
 ##### R-squared (R²) for Test Data
 
 The formula for R-squared on the test data is:
+
 $$ R^2_{\text{test}} = 1 - \frac{SS_{\text{res, test}}}{SS_{\text{tot, test}}} $$
 
 Where:
 
-- $ SS_{\text{res, test}} $ is the sum of squares of residuals for the test data.
-- $ SS_{\text{tot, test}} $ is the total sum of squares for the test data.
+- $$ SS_{\text{res, test}} $$ is the sum of squares of residuals for the test data.
+- $$ SS_{\text{tot, test}} $$ is the total sum of squares for the test data.
 
 ### Mean Squared Error (MSE)
 
@@ -319,9 +323,9 @@ $$ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$
 
 Where:
 
-- $ y_i $ is the actual value.
-- $ \hat{y}_i $ is the predicted value.
-- $ n $ is the number of data points.
+- $$ y_i $$ is the actual value.
+- $$ \hat{y}_i $$ is the predicted value.
+- $$ n $$ is the number of data points.
 
 ### Explaining Project Results Based on Evaluation Metrics
 
