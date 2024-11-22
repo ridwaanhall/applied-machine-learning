@@ -10,24 +10,6 @@ This project aims to predict gold prices using machine learning techniques. Gold
 
 The issue of gold price fluctuation needs to be addressed because it can affect economic stability and investment decisions. By using machine learning models, we can analyze historical data and the factors influencing gold prices to make more accurate predictions. This will help reduce risks and increase profits for investors.
 
-**Related Research or References:**
-
-- DigitalOcean. "Using `StandardScaler()` Function to Standardize Python Data" Available at [DigitalOcean](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
-
-- scikit-learn. "StandardScaler" Available at [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
-
-- Shah, I., & Pachanekar, R. (2021). Gold Price Prediction Using Machine Learning In Python. Retrieved from [QuantInsti](https://blog.quantinsti.com/gold-price-prediction-using-machine-learning-python/).
-
-- Youssef, M. (2021). Gold Price Prediction Using Random Forest. Retrieved from [GitHub](https://github.com/MYoussef885/Gold_Price_Prediction).
-- Pendry, P. S. (2021). Gold Price Prediction using Random Forest. Retrieved from [GitHub](https://github.com/pavansaipendry/Gold-Price-Prediction).
-
-- Ben Jabeur, S., Mefteh-Wali, S., & Viviani, J. L. (2021). Forecasting gold price with the XGBoost algorithm and SHAP interaction values. *Annals of Operations Research*, 334, 679-699. Retrieved from [Springer](https://link.springer.com/article/10.1007/s10479-021-04187-w).
-- Theja, A. (2021). Gold Price Prediction Using XGBoost. Retrieved from [GitHub](https://github.com/abhijantheja/gold_predictor).
-
-- GeeksforGeeks. "Gold Price Prediction using Machine Learning." Available at [GeeksforGeeks](https://www.geeksforgeeks.org/gold-price-prediction-using-machine-learning/).
-
-- Analytics Vidhya. "Building A Gold Price Prediction Model Using Machine Learning" Available at [Analytics Vidhya](https://www.analyticsvidhya.com/blog/2021/07/building-a-gold-price-prediction-model-using-machine-learning/).
-
 ## Business Understanding
 
 ### Problem Statements
@@ -122,7 +104,21 @@ Column `USO` has the highest skewness of 0.98, so a square root transformation w
 
 ![Distribution of Columns](images/histogram-boxplot.png)
 
-It is clear that `USO` has outliers. Here is code to remove outliers:
+It is clear that `USO` has outliers.
+
+## Data Preparation
+
+### Drop SLV
+
+Drop the SLV column since the GLD column also shows a significant correlation with our target variable.
+
+```python
+gold_price.drop("SLV", axis=1, inplace=True)
+```
+
+### Remove Outliers
+
+Based on EDA, there are outliers, Here is code to remove outliers:
 
 ```python
 def remove_outliers(column):
@@ -137,53 +133,58 @@ gold_price[['SPX', 'GLD', 'USO', 'EUR/USD']] = \
     gold_price[['SPX', 'GLD', 'USO', 'EUR/USD']].apply(remove_outliers)
 ```
 
-## Data Preparation
+### Splitting the Data
 
-1. **Splitting the Data:**
+Separates the data into training and testing sets, allowing for model evaluation.
 
-    ```python
-    X = gold_price.drop(columns=['Date', 'EUR/USD'])
-    y = gold_price['EUR/USD']
+```python
+X = gold_price.drop(columns=['Date', 'EUR/USD'])
+y = gold_price['EUR/USD']
 
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    ```
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
 
-    - The `Date` and target variable columns are dropped, and the remaining data is stored in the `X` variable as independent variables. The target variable is stored in the `y` variable.
-    - The dataset is split into training and testing sets in an 80:20 ratio.
+- The `Date` and target variable columns are dropped, and the remaining data is stored in the `X` variable as independent variables. The target variable is stored in the `y` variable.
+- The dataset is split into training and testing sets in an 80:20 ratio.
 
-2. **Scaling the Data:**
+### Scaling the Data
 
-    The formula for standardizing data using the `StandardScaler` is:
+Standardizes the data, ensuring that all features contribute equally to the model and improving the model's performance.
 
-    $$z = \frac{x - \mu}{\sigma}$$
+The formula for standardizing data using the `StandardScaler` is:
 
-    Where:
+$$z = \frac{x - \mu}{\sigma}$$
 
-    - $z$ is the standardized value.
+Where:
 
-    - $x$ is the original value.
+- $z$ is the standardized value.
 
-    - $\mu$ is the mean of the training samples.
+- $x$ is the original value.
 
-    - $\sigma$ is the standard deviation of the training samples.
+- $\mu$ is the mean of the training samples.
 
-    This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
+- $\sigma$ is the standard deviation of the training samples.
 
-    ```python
-    scaler = StandardScaler()
+This formula transforms the data to have a mean of 0 and a standard deviation of 1 Function to Standardize Python Data.[1] [2]
 
-    x_train_scaled = scaler.fit_transform(x_train)
-    x_test_scaled = scaler.transform(x_test)
-    ```
+```python
+scaler = StandardScaler()
 
-     - The `StandardScaler` is used to standardize the data, transforming it to have a mean of 0 and a standard deviation of 1.
-     - Fit the StandardScaler on the training dataset and transform both training and testing datasets.
-     - This step is crucial for ensuring that all features contribute equally to the model.
+x_train_scaled = scaler.fit_transform(x_train)
+x_test_scaled = scaler.transform(x_test)
 
-### Reasons for Data Preparation Steps
+imputer = SimpleImputer(strategy='mean')
 
-- **Splitting the Data:** Separates the data into training and testing sets, allowing for model evaluation.
-- **Scaling the Data:** Standardizes the data, ensuring that all features contribute equally to the model and improving the model's performance.
+# Fit and transform the imputer on the scaled training data
+x_train_scaled = imputer.fit_transform(x_train_scaled)
+
+# Transform the scaled test data using the trained imputer
+x_test_scaled = imputer.transform(x_test_scaled)
+```
+
+- The `StandardScaler` is used to standardize the data, transforming it to have a mean of 0 and a standard deviation of 1.
+- Fit the StandardScaler on the training dataset and transform both training and testing datasets.
+- This step is crucial for ensuring that all features contribute equally to the model.
 
 ## Model Development
 
@@ -191,7 +192,7 @@ gold_price[['SPX', 'GLD', 'USO', 'EUR/USD']] = \
 
 #### Lasso Regression Formula
 
-Lasso Regression, or Least Absolute Shrinkage and Selection Operator, is a type of linear regression that uses L1 regularization. The objective function for Lasso Regression is:
+Lasso Regression, or Least Absolute Shrinkage and Selection Operator, is a type of linear regression that uses L1 regularization[3]. The objective function for Lasso Regression is:
 
 $$ minimize \left( \frac{1}{2n} \sum_{i=1}^{n} (y_i - \hat{y}i)^2 + \alpha \sum_{j=1}^{p} |\beta_j| \right) $$
 
@@ -233,7 +234,7 @@ Best score:  0.9675368417416342
 
 #### RandomForestRegressor Formula
 
-RandomForestRegressor is an ensemble learning method for regression that operates by constructing multiple decision trees during training and outputting the mean prediction of the individual trees.
+RandomForestRegressor is an ensemble learning method for regression that operates by constructing multiple decision trees during training and outputting the mean prediction of the individual trees[4].
 
 The formula for the prediction of a RandomForestRegressor is:
 
@@ -265,7 +266,7 @@ Where:
 
 RandomForestRegressor works by creating a multitude of decision trees at training time and outputting the average prediction of the individual trees. It reduces overfitting by averaging multiple trees, which improves the model's generalization ability.
 
-The key parameters of RandomForestRegressor include:
+The key parameters of RandomForestRegressor include[4]:
 
 - **n_estimators**: The number of trees in the forest.
 - **max_depth**: The maximum depth of the trees.
@@ -359,7 +360,7 @@ These metrics indicate that the XGBoost model has excellent predictive power and
 
 #### What is R-squared (R²) and How it Works?
 
-R-squared (R²), or the coefficient of determination, measures the proportion of variance in the dependent variable that is explained by the independent variable(s) in a regression model. It ranges from 0 to 1, where 0 means the model explains none of the variability, and 1 means it explains all the variability. A higher R² value indicates a better fit of the model to the data, but it does not imply causation. For multiple regression, adjusted R² is often used to account for the number of predictors, as adding more variables can inflate R² artificially.
+R-squared (R²), or the coefficient of determination, measures the proportion of variance in the dependent variable that is explained by the independent variable(s) in a regression model. It ranges from 0 to 1, where 0 means the model explains none of the variability, and 1 means it explains all the variability. A higher R² value indicates a better fit of the model to the data, but it does not imply causation. For multiple regression, adjusted R² is often used to account for the number of predictors, as adding more variables can inflate R² artificially[5].
 
 #### R-squared (R²) Formula
 
@@ -453,3 +454,19 @@ These metrics indicate that the XGBoost model performs well on both the training
 ##### Impact of XGBoost Model on `Business Understanding` based on Evaluation
 
 The XGBoost model effectively addresses the challenge of predicting highly volatile gold prices by capturing complex patterns in the data and handling datasets with multiple variables. With high R-squared values (0.9997 for training and 0.9853 for testing) and low Mean Squared Errors (4.10e-6 for training and 0.000231 for testing), the model demonstrates exceptional accuracy in predicting gold prices. These metrics highlight the model's ability to support informed investment decisions by providing precise and reliable predictions. Its ensemble nature reduces overfitting, enhances generalization, and ensures robust performance over time. Furthermore, the model's capability to handle intricate datasets simplifies preprocessing, making it well-suited for real-time deployment and live applications where consistent reliability is paramount.
+
+**Related Research or References:**
+
+[1] DigitalOcean. "Using `StandardScaler()` Function to Standardize Python Data" Available at [DigitalOcean](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
+
+[2] scikit-learn. "StandardScaler" Available at [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
+
+[3] GeeksforGeeks. "Gold Price Prediction using Machine Learning." Available at [GeeksforGeeks](https://www.geeksforgeeks.org/gold-price-prediction-using-machine-learning/).
+
+[4] scikit-learn. "RandomForestRegressor" Available at [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
+
+[5] GeeksforGeeks. "R Squared | Coefficient of Determination" Available at [GeeksforGeeks](https://www.geeksforgeeks.org/r-squared/)
+
+[6] GeeksforGeeks "Mean Squared Error" Available at [GeeksforGeeks](https://www.geeksforgeeks.org/mean-squared-error/)
+
+[7] scikit-learn. "RandomForestRegressor" Available at [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
