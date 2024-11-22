@@ -98,7 +98,7 @@ The graph is now less noisy, allowing us to better analyze the trend in the chan
 
 #### Distribution of Columns
 
-![Distribution of Columns](histogram-distribution.png)
+![Distribution of Columns](images/histogram-distribution.png)
 
 The data distribution looks good. However, we must calculate skewness along the index axis.
 
@@ -120,7 +120,7 @@ Column `USO` has the highest skewness of 0.98, so a square root transformation w
 
 #### Visualize the Outliers
 
-![Distribution of Columns](boxplot-distribution.png)
+![Distribution of Columns](images/boxplot-distribution.png)
 
 It is clear that `USO` has outliers. Here is code to remove outliers:
 
@@ -346,11 +346,10 @@ Best parameter values:  Best Parameters:  {'colsample_bytree': 0.8, 'learning_ra
 
 I chose XGBoost as the best model because of its outstanding performance metrics:
 
-- **R-squared (train)**: 0.9994696666165278
-- **R-squared (test)**: 0.984976762423431
-
-- **Mean Squared Error (train)**: 8.278906955938487e-06
-- **Mean Squared Error (test)**: 0.00023525446120578586
+- R-squared (train):  0.9997376396433267
+- R-squared (test):  0.9852577428747992
+- Mean Squared Error (train):  4.095644455953784e-06
+- Mean Squared Error (test):  0.0002308544838800552
 
 These metrics indicate that the XGBoost model has excellent predictive power and generalizes well to unseen data.
 
