@@ -42,39 +42,21 @@ The issue of gold price fluctuation needs to be addressed because it can affect 
 
 ## A. Problem Statements
 
-- The gold price is highly volatile and influenced by various economic and political factors, making it challenging for investors to predict future prices accurately.
+- Volatility of Gold Prices: The price of gold is highly volatile and changes rapidly over time. This unpredictability makes it challenging for investors and analysts to make informed decisions about buying or selling gold.
 
-- The lack of accurate prediction models can lead to poor investment decisions, resulting in financial losses.
+- Data Complexity: The dataset used for predicting gold prices includes multiple variables such as SPX, GLD, USO, SLV, and EUR/USD. Handling and preprocessing this complex data to make it suitable for model training is a significant challenge.
 
 ## B. Goals
 
-- Develop a machine learning model to predict gold prices accurately.
+- Accurate Prediction: The primary goal of the project is to develop a machine learning model that can accurately predict the price of gold per unit. This involves analyzing historical data and identifying patterns that can help forecast future prices.
 
-- Provide investors and market analysts with a reliable tool to make informed decisions, thereby reducing financial risks and increasing potential profits.
+- Model Deployment: Another goal is to deploy the trained model so that it can be used in real-time to predict gold prices. This includes saving the model using tools like Pickle and integrating it with a web framework for live predictions.
 
 ## C. Solution Statement
 
-01. Solution 1: Implement Multiple Algorithms
+- Data Preprocessing: This includes handling missing values, normalizing data, and removing outliers to ensure the dataset is clean and suitable for model training.
 
-    - Use multiple machine learning algorithms such as Linear Regression, Random Forest, and XGBoost to predict gold prices.
-
-    - Compare the performance of these algorithms to identify the most accurate model.
-
-    - Evaluation Metrics: R-squared, Mean Squared Error (MSE).
-
-02. Solution 2: Improve Baseline Model with Hyperparameter Tuning
-
-    - Start with a baseline model, such as Linear Regression.
-
-    - Perform hyperparameter tuning to optimize the model's performance.
-
-    - Evaluation Metrics: R-squared, Mean Squared Error (MSE).
-
-03. Solution 3: Ensemble Methods
-
-    - Combine the predictions of multiple models using ensemble methods like Bagging and Boosting to improve accuracy.
-
-    - Evaluation Metrics: R-squared, Mean Squared Error (MSE).
+- Model Development and Deployment: Various machine learning models such as Lasso Regression, RandomForestRegressor, and XGBoost are used to train on the dataset. The best-performing model is then deployed using Pickle for real-time predictions.
 
 # 2. Importing Library
 """
@@ -320,7 +302,7 @@ def remove_outliers(column):
 
 """We have set the upper limit of the column to the 95th percentile and the lower limit to the 5th percentile. This means that data points greater than the 95th percentile are capped at the 95th percentile value, and data points lower than the 5th percentile are capped at the 5th percentile value.
 
-### Apply the outlier_removal function to each of the rows of the columns
+### Apply the remove_outliers function to each of the rows of the columns
 """
 
 gold_price[['SPX', 'GLD', 'USO', 'EUR/USD']] = \
@@ -347,10 +329,10 @@ The formula for standardizing data using the `StandardScaler` is:
 $$ z = \frac{x - \mu}{\sigma} $$
 
 Where:
-- \( z \) is the standardized value.
-- \( x \) is the original value.
-- \( \mu \) is the mean of the training samples.
-- \( \sigma \) is the standard deviation of the training samples.
+- $ z $ is the standardized value.
+- $ x $ is the original value.
+- $ \mu $ is the mean of the training samples.
+- $ \sigma $ is the standard deviation of the training samples.
 
 This formula transforms the data to have a mean of 0 and a standard deviation of 1 [Function to Standardize Python Data](https://www.digitalocean.com/community/tutorials/standardscaler-function-in-python).
 """
@@ -576,21 +558,41 @@ The key components of the XGBoost model include:
 """
 
 from xgboost import XGBRegressor
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import r2_score, mean_squared_error
+
+# Define the parameter grid
+param_grid = {
+    'n_estimators': [100, 200, 300],
+    'learning_rate': [0.01, 0.1, 0.2],
+    'max_depth': [3, 5, 7],
+    'subsample': [0.8, 1.0],
+    'colsample_bytree': [0.8, 1.0]
+}
 
 model_xgb = XGBRegressor()
 
-model_xgb.fit(x_train_scaled, y_train)
+grid_search = GridSearchCV(estimator=model_xgb, param_grid=param_grid, cv=3, scoring='r2', verbose=1, n_jobs=-1)
 
-y_pred_train = model_xgb.predict(x_train_scaled)
-y_pred_test = model_xgb.predict(x_test_scaled)
+grid_search.fit(x_train_scaled, y_train)
 
+best_params = grid_search.best_params_
+
+best_model_xgb = XGBRegressor(**best_params)
+best_model_xgb.fit(x_train_scaled, y_train)
+
+# Predict
+y_pred_train = best_model_xgb.predict(x_train_scaled)
+y_pred_test = best_model_xgb.predict(x_test_scaled)
+
+# Evaluate
 r2_train = r2_score(y_train, y_pred_train)
 r2_test = r2_score(y_test, y_pred_test)
 
 mse_train = mean_squared_error(y_train, y_pred_train)
 mse_test = mean_squared_error(y_test, y_pred_test)
 
+print("Best Parameters: ", best_params)
 print("R-squared (train): ", r2_train)
 print("R-squared (test): ", r2_test)
 print()
