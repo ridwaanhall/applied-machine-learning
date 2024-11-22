@@ -32,45 +32,36 @@ The issue of gold price fluctuation needs to be addressed because it can affect 
 
 ### Problem Statements
 
-- The gold price is highly volatile and influenced by various economic and political factors, making it challenging for investors to predict future prices accurately.
+- Volatility of Gold Prices: The price of gold is highly volatile and changes rapidly over time. This unpredictability makes it challenging for investors and analysts to make informed decisions about buying or selling gold.
 
-- The lack of accurate prediction models can lead to poor investment decisions, resulting in financial losses.
+- Data Complexity: The dataset used for predicting gold prices includes multiple variables such as SPX, GLD, USO, SLV, and EUR/USD. Handling and preprocessing this complex data to make it suitable for model training is a significant challenge.
 
 ### Goals
 
-- Develop a machine learning model to predict gold prices accurately.
+- Accurate Prediction: The primary goal of the project is to develop a machine learning model that can accurately predict the price of gold per unit. This involves analyzing historical data and identifying patterns that can help forecast future prices.
 
-- Provide investors and market analysts with a reliable tool to make informed decisions, thereby reducing financial risks and increasing potential profits.
+- Model Deployment: Another goal is to deploy the trained model so that it can be used in real-time to predict gold prices. This includes saving the model using tools like Pickle and integrating it with a web framework for live predictions.
 
 ### Solution statements
 
-01. Solution 1: Implement Multiple Algorithms
+- Data Preprocessing: This includes handling missing values, normalizing data, and removing outliers to ensure the dataset is clean and suitable for model training.
 
-    - Use multiple machine learning algorithms such as Linear Regression, Random Forest, and XGBoost to predict gold prices.
-
-    - Compare the performance of these algorithms to identify the most accurate model.
-
-    - Evaluation Metrics: R-squared, Mean Squared Error (MSE).
-
-02. Solution 2: Improve Baseline Model with Hyperparameter Tuning
-
-    - Start with a baseline model, such as Linear Regression.
-
-    - Perform hyperparameter tuning to optimize the model's performance.
-
-    - Evaluation Metrics: R-squared, Mean Squared Error (MSE).
-
-03. Solution 3: Ensemble Methods
-
-    - Combine the predictions of multiple models using ensemble methods like Bagging and Boosting to improve accuracy.
-
-    - Evaluation Metrics: R-squared, Mean Squared Error (MSE).
+- Model Development and Deployment: Various machine learning models such as Lasso Regression, RandomForestRegressor, and XGBoost are used to train on the dataset. The best-performing model is then deployed using Pickle for real-time predictions.
 
 ## Data Understanding
 
 The dataset for this project is taken from GeeksforGeeks and has been modified to be easy to use for beginners learning machine learning, especially in time series. The original source of the gold price data is from Yahoo Finance. The dataset can be downloaded from the following source: [GitHub Repository](https://github.com/ridwaanhall/applied-machine-learning/raw/refs/heads/main/predictive-analytics/data/gold_price_data.csv).
 
-Next, let's describe all the variables or features in the data.
+### Data Summary
+
+- Rows: 2290
+- Columns: 6
+
+### Data Condition
+
+- Missing Values: There are no missing values in any of the columns.
+- Duplicate Data: There are no duplicate data.
+- Outliers: The `USO` column has outliers, which were handled by capping the values at the 95th and 5th percentiles.
 
 ### Variables in the Gold Price Dataset
 
@@ -93,9 +84,58 @@ Next, let's describe all the variables or features in the data.
 
 ### EDA
 
-- Data Wrangling: This is the process of cleaning and transforming raw data into a format that is more appropriate for analysis. It includes handling missing values, correcting data types, and removing duplicates.
-- Distribution of Columns: Analyzing the distribution of data in each column helps to understand the spread and central tendency of the data. This can be done using histograms, bar charts, or summary statistics like mean, median, and standard deviation.
-- Plotting Boxplot to Visualize the Outliers: A boxplot is a graphical representation that shows the distribution of data based on a five-number summary: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. It helps to identify outliers and understand the spread and skewness of the data.
+#### Data Wrangling
+
+![Data Wrangling](images/data-wrangling.png)
+
+This graph does not provide clear insights into the changes in the price of gold due to its noisy appearance.
+
+To better observe the trend, we need to smooth the data.
+
+![Data Wrangling Fixed](images/data-wrangling-fixed.png)
+
+The graph is now less noisy, allowing us to better analyze the trend in the change of gold prices.
+
+#### Distribution of Columns
+
+![Distribution of Columns](histogram-distribution.png)
+
+The data distribution looks good. However, we must calculate skewness along the index axis.
+
+```python
+print(dataset.drop("Date", axis=1).skew(axis=0, skipna=True))
+```
+
+the output:
+
+Skewness of each column:
+SPX            0.300362
+GLD            0.334138
+USO            1.699331
+EUR/USD       -0.005292
+price_trend   -0.029588
+dtype: float64
+
+Column `USO` has the highest skewness of 0.98, so a square root transformation will be applied to this column to reduce its skewness to 0 in the visualize the outliers section.
+
+#### Visualize the Outliers
+
+![Distribution of Columns](boxplot-distribution.png)
+
+It is clear that `USO` has outliers. Here is code to remove outliers:
+
+```python
+def remove_outliers(column):
+    upper_limit = column.quantile(0.95)
+    lower_limit = column.quantile(0.05)
+
+    column = column.clip(lower=lower_limit, upper=upper_limit)
+
+    return column
+
+gold_price[['SPX', 'GLD', 'USO', 'EUR/USD']] = \
+    gold_price[['SPX', 'GLD', 'USO', 'EUR/USD']].apply(remove_outliers)
+```
 
 ## Data Preparation
 
@@ -145,9 +185,7 @@ Next, let's describe all the variables or features in the data.
 - **Splitting the Data:** Separates the data into training and testing sets, allowing for model evaluation.
 - **Scaling the Data:** Standardizes the data, ensuring that all features contribute equally to the model and improving the model's performance.
 
-## Modeling
-
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+## Model Development
 
 ### Lasso Regression
 
@@ -183,6 +221,13 @@ Where:
 Lasso Regression aims to minimize the sum of the squared residuals (the difference between the actual and predicted values) while also applying a penalty to the absolute values of the coefficients. This penalty term helps to shrink some coefficients to zero, effectively performing feature selection and reducing the complexity of the model.
 
 The regularization parameter $\alpha$ controls the strength of the penalty. A higher value of $\alpha$ increases the penalty, leading to more coefficients being shrunk to zero. Conversely, a lower value of $\alpha$ reduces the penalty, making the model more similar to ordinary least squares regression.
+
+#### Best Parameter Value from Lasso Regression
+
+```plaintext
+Best parameter values:  {'lasso__alpha': 0.0001}
+Best score:  0.9675368417416342
+```
 
 ### RandomForestRegressor
 
@@ -227,6 +272,13 @@ The key parameters of RandomForestRegressor include:
 - **random_state**: Controls the randomness of the bootstrapping of the samples used when building trees.
 - **n_jobs**: The number of jobs to run in parallel for both fit and predict.
 
+#### Best Parameter Value from RandomForestRegressor
+
+```plaintext
+Best parameter values:  {'max_depth': 7, 'n_estimators': 50}
+Best score:  0.9771392110600441
+```
+
 ### XGBoost
 
 #### XGBoost Formula
@@ -268,6 +320,12 @@ The key components of the XGBoost model include:
 - **Regularization Term**: Helps to control the complexity of the model and prevent overfitting by penalizing large coefficients.
 - **Learning Rate**: Controls the contribution of each tree to the final model. A lower learning rate requires more trees to be added to the model.
 - **Tree Structure**: Defines the depth and number of leaves in each tree. Deeper trees can capture more complex patterns but are also more prone to overfitting.
+
+#### Best Parameter Value from XGBoost
+
+```plaintext
+Best parameter values:  Best Parameters:  {'colsample_bytree': 0.8, 'learning_rate': 0.1, 'max_depth': 7, 'n_estimators': 300, 'subsample': 0.8}
+```
 
 #### Advantages and Disadvantages
 
@@ -352,8 +410,47 @@ Where:
 
 The evaluation metrics used in this project are R-squared (R²) and Mean Squared Error (MSE). These metrics help to assess the performance and accuracy of the machine learning models used for predicting gold prices.
 
-- **R-squared (R²):** This metric indicates the proportion of variance in the dependent variable that is explained by the independent variables in the model. An R² value closer to 1 signifies a better fit of the model to the data. In this project, the XGBoost model achieved an R² of 0.9995 on the training data and 0.9850 on the test data, indicating excellent predictive power and generalization to unseen data.
+#### Lasso Regression Evaluation
 
-- **Mean Squared Error (MSE):** This metric measures the average squared difference between the actual and predicted values. A lower MSE indicates better model performance. The XGBoost model achieved an MSE of 8.28e-06 on the training data and 0.00024 on the test data, demonstrating its high accuracy in predicting gold prices.
+The evaluation metrics for the Lasso Regression model are as follows:
 
-These results highlight the effectiveness of the XGBoost model in capturing the underlying patterns in the data and making accurate predictions, making it a reliable tool for investors and market analysts.
+- R-squared (train):  0.9684811019451044
+- R-squared (test):  0.9609210669970879
+- Mean Squared Error (train):  0.0004920339403145819
+- Mean Squared Error (test):  0.0006119515371597247
+
+These metrics indicate that the Lasso Regression model performs well on both the training and test data, with a high R-squared value and low Mean Squared Error. However, it is slightly less accurate compared to the XGBoost model and RandomForestRegressor model.
+
+##### Impact of Lasso Regression Model on `Business Understanding` based on Evaluation
+
+Lasso Regression addresses the volatility of gold prices by providing a stable and interpretable model, performing feature selection by shrinking some coefficients to zero, which reduces complexity and aids in handling and preprocessing complex data. This makes the model more robust, less prone to overfitting, and ensures more reliable predictions. It supports the goal of accurate prediction by reducing overfitting and improving generalization, leading to better-informed investment decisions. Lasso Regression models are simple and efficient, making them easier to deploy in real-time applications with less computational power. It emphasizes data preprocessing, ensuring a clean dataset for better performance.
+
+#### RandomForestRegressor Evaluation
+
+The evaluation metrics for the RandomForestRegressor model are as follows:
+
+- R-squared (train): 0.9853448468612149
+- R-squared (test): 0.9753603891969073
+- Mean Squared Error (train): 0.0002287780725148166
+- Mean Squared Error (test): 0.00038584082387424333
+
+These metrics indicate that the RandomForestRegressor model performs well on both the training and test data, with a high R-squared value and low Mean Squared Error. However, it is slightly less accurate compared to the XGBoost model.
+
+##### Impact of RandomForestRegressor Model on `Business Understanding` based on Evaluation
+
+RandomForestRegressor model addresses the challenge of predicting highly volatile gold prices by providing a robust and flexible solution that captures complex patterns in the data and effectively handles datasets with multiple variables, making it suitable for preprocessing and analyzing intricate data relationships. With high R-squared values (0.985 for training and 0.975 for testing) and low Mean Squared Errors (0.000228 for training and 0.000385 for testing), the model accurately predicts gold prices, supporting the primary goal of making well-informed investment decisions. Its robustness and flexibility make it suitable for real-time deployment, ensuring reliable predictions crucial for live applications. The model's ensemble nature reduces the risk of overfitting and improves generalization, leading to accurate predictions over time, while its capability to manage complex datasets simplifies preprocessing, resulting in more efficient and effective data handling.
+
+#### XGBoost Evaluation
+
+The evaluation metrics for the XGBoost model are as follows:
+
+- R-squared (train):  0.9997376396433267
+- R-squared (test):  0.9852577428747992
+- Mean Squared Error (train):  4.095644455953784e-06
+- Mean Squared Error (test):  0.0002308544838800552
+
+These metrics indicate that the XGBoost model performs well on both the training and test data, with a high R-squared value and low Mean Squared Error.
+
+##### Impact of XGBoost Model on `Business Understanding` based on Evaluation
+
+The XGBoost model effectively addresses the challenge of predicting highly volatile gold prices by capturing complex patterns in the data and handling datasets with multiple variables. With high R-squared values (0.9997 for training and 0.9853 for testing) and low Mean Squared Errors (4.10e-6 for training and 0.000231 for testing), the model demonstrates exceptional accuracy in predicting gold prices. These metrics highlight the model's ability to support informed investment decisions by providing precise and reliable predictions. Its ensemble nature reduces overfitting, enhances generalization, and ensures robust performance over time. Furthermore, the model's capability to handle intricate datasets simplifies preprocessing, making it well-suited for real-time deployment and live applications where consistent reliability is paramount.
