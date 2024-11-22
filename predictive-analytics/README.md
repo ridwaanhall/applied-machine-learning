@@ -120,7 +120,7 @@ Column `USO` has the highest skewness of 0.98, so a square root transformation w
 
 #### Visualize the Outliers
 
-![Distribution of Columns](images/boxplot-distribution.png)
+![Distribution of Columns](images/histogram-boxplot.png)
 
 It is clear that `USO` has outliers. Here is code to remove outliers:
 
