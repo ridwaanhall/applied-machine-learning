@@ -1,4 +1,4 @@
-# Machine Learning Project Report - Ridwan Halim
+# Machine Learning Project Report[7] - Ridwan Halim
 
 [![wakatime](https://wakatime.com/badge/user/018b799e-de53-4f7a-bb65-edc2df9f26d8/project/45c71873-666f-4140-a133-d302f409bd33.svg)](https://wakatime.com/badge/user/018b799e-de53-4f7a-bb65-edc2df9f26d8/project/45c71873-666f-4140-a133-d302f409bd33)
 
@@ -292,3 +292,5 @@ These values indicate a slight improvement in the model's performance over time,
 [5] A. Tam, "Understand Model Behavior During Training by Visualizing Metrics," MachineLearningMastery.com, 2023. Available: https://machinelearningmastery.com/understand-model-behavior-during-training-by-visualizing-metrics/
 
 [6] MathWorks, "Specify Training Options in Custom Training Loop," MathWorks Documentation. Available: https://www.mathworks.com/help/deeplearning/ug/specify-training-options-in-custom-training-loop.html
+
+[7] T. D. Setiani and M. R. Ardhanie, "Machine Learning Terapan," Dicoding Indonesia. [Online]. Available: https://www.dicoding.com/academies/319. [Accessed: Dec. 1, 2024]
