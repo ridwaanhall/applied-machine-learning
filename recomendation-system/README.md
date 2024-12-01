@@ -136,7 +136,7 @@ For collaborative filtering, we will also focus on the song titles and their gen
 - `track_name`
 - `popularity`
 
-Since `track_id` and `track_name` are strings and unique, we will encode these two columns. The resulting dataframe will contain the encoded `track_id`, encoded `track_name`, and `popularity` columns. An example of this, code is shown in the code below.
+Since `track_id` and `track_name` are strings and unique, we will encode these two columns. The resulting dataframe will contain the encoded `track_id`, encoded `track_name`, and `popularity` columns. An example of this, encode is shown in the code below.
 
 ```python
     def encode_data(self):
