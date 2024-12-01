@@ -282,9 +282,15 @@ These values indicate a slight improvement in the model's performance over time,
 # References
 
 [1] PyTorch Documentation. Available: https://pytorch.org/docs/stable/index.html
+
 [2] scikit-learn Documentation. Available: https://scikit-learn.org/stable/modules/feature_extraction.html#tfidf-term-weighting
+
 [3] scikit-learn Documentation. Available: https://scikit-learn.org/stable/modules/preprocessing.html
+
 [4] S. Banerjee, "Collaborative Filtering for Movie Recommendations," Keras, 2020. Available: https://keras.io/examples/structured_data/collaborative_filtering_movielens/
+
 [5] A. Tam, "Understand Model Behavior During Training by Visualizing Metrics," MachineLearningMastery.com, 2023. Available: https://machinelearningmastery.com/understand-model-behavior-during-training-by-visualizing-metrics/
+
 [6] MathWorks, "Specify Training Options in Custom Training Loop," MathWorks Documentation. Available: https://www.mathworks.com/help/deeplearning/ug/specify-training-options-in-custom-training-loop.html
+
 [7] J. A. Konstan, "Introduction to Recommender Systems: Non-Personalized and Content-Based," Coursera. Available: https://www.coursera.org/learn/recommender-systems-introduction
