@@ -214,7 +214,7 @@ First of all, we initialize the DataPreprocessor class to handle data encoding a
 
 Next, we define the RecommenderNet class, a neural network model with embedding layers for both tracks and track names, which helps capture latent features [4]. The forward method computes the dot product of these embeddings and adds biases, applying a sigmoid activation function to produce the final output. We then set up the Trainer class to handle the training of the model. This class manages the training loop, calculating the Root Mean Squared Error (RMSE) for both training and validation datasets, and prints the RMSE every ten epochs [5]. The plot_rmse function is used to visualize the training and validation RMSE over epochs, helping to monitor the model’s performance and evaluate [6].
 
-Finally, the RecommenderSystem class is responsible for generating track recommendations. It takes a track name, encodes it, and computes the predicted popularity for all tracks, returning the top recommendations based on these predictions [7]. Utility functions like get_data_loaders assist in creating data loaders for training and validation. Here's example:
+Finally, the RecommenderSystem class is responsible for generating track recommendations. It takes a track name, encodes it, and computes the predicted popularity for all tracks, returning the top recommendations based on these predictions. Utility functions like get_data_loaders assist in creating data loaders for training and validation. Here's example:
 
 Recommendations based on track name: 'Fire - Killer Hertz Remix'
 
@@ -292,5 +292,3 @@ These values indicate a slight improvement in the model's performance over time,
 [5] A. Tam, "Understand Model Behavior During Training by Visualizing Metrics," MachineLearningMastery.com, 2023. Available: https://machinelearningmastery.com/understand-model-behavior-during-training-by-visualizing-metrics/
 
 [6] MathWorks, "Specify Training Options in Custom Training Loop," MathWorks Documentation. Available: https://www.mathworks.com/help/deeplearning/ug/specify-training-options-in-custom-training-loop.html
-
-[7] J. A. Konstan, "Introduction to Recommender Systems: Non-Personalized and Content-Based," Coursera. Available: https://www.coursera.org/learn/recommender-systems-introduction
