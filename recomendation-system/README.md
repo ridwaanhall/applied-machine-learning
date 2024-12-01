@@ -246,9 +246,9 @@ Recommendations based on track name: 'Fire - Killer Hertz Remix'
 
 The evaluation metrics used in this project include Mean Squared Error (MSE) Loss. MSE is calculated as the average squared difference between the predicted values and the actual values. The formula for MSE is:
 
-\[ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]
+$$ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$
 
-where \( y_i \) is the actual value, \( \hat{y}_i \) is the predicted value, and \( n \) is the number of samples. MSE measures the average of the squares of the errors, which means it penalizes larger errors more than smaller ones, making it a useful metric for regression problems.
+where $y_i$ is the actual value, $\hat{y}_i$ is the predicted value, and $n$ is the number of samples. MSE measures the average of the squares of the errors, which means it penalizes larger errors more than smaller ones, making it a useful metric for regression problems.
 
 ```text
 Epoch [10/100], MSE Loss: 0.8078
@@ -269,9 +269,9 @@ Based on the evaluation metrics, the project outcomes can be described by the pr
 
 The evaluation metric used in this project is Root Mean Squared Error (RMSE). RMSE is calculated as the square root of the average of the squared differences between the predicted values and the actual values. The formula for RMSE is:
 
-\[ \text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2} \]
+$$RMSE = \sqrt{\frac{\sum_{i=1}^n{(y_i - \hat{y_i})}^2}{N}}$$
 
-where \( y_i \) is the actual value, \( \hat{y}_i \) is the predicted value, and \( n \) is the number of samples. RMSE measures the spread of errors and is useful for evaluating the accuracy of a model's predictions.
+where $y_i$ is the actual value, $\hat{y}_i$ is the predicted value, and $n$ is the number of samples. RMSE measures the spread of errors and is useful for evaluating the accuracy of a model's predictions.
 
 ![Evaluation of RMSE](images/evaluate_rmse.png)
 
