@@ -1,4 +1,4 @@
-# Machine Learning Project Report[7] - Ridwan Halim
+# Machine Learning Project Report - Ridwan Halim
 
 [![wakatime](https://wakatime.com/badge/user/018b799e-de53-4f7a-bb65-edc2df9f26d8/project/45c71873-666f-4140-a133-d302f409bd33.svg)](https://wakatime.com/badge/user/018b799e-de53-4f7a-bb65-edc2df9f26d8/project/45c71873-666f-4140-a133-d302f409bd33)
 
@@ -36,23 +36,28 @@ The primary goals of this project are:
    These tasks aim to provide insights into the music dataset, highlighting popular albums, genres, and artists based on various metrics.
 
 2. **Create a Recommendation System**:
-   - Develop a recommendation system to suggest music to users. This system should be designed to provide personalized music recommendations based on track name.
+   - Implement a recommendation system using Content-based Filtering to suggest music based on track features.
+   - Implement a recommendation system using Collaborative Filtering to suggest music based on user interaction data.
 
 ## Solution Approach
-To achieve these goals, we propose two solution approaches:
+To achieve these goals, we propose the following steps:
 
 1. **Data Analysis and Insights**:
-   - Identify the **Top 10 Albums** with the most songs.
-   - Determine the **Top 10 Music Genres** based on the highest average popularity.
-   - Find the **Top 10 Genres** with the highest number of unique artists.
-   - Identify the **Top 10 Artists** by average popularity score.
-   - Determine the **Top 10 Artists** by the number of tracks.
-
-   These tasks aim to provide insights into the music dataset, highlighting popular albums, genres, and artists based on various metrics.
+   - Use descriptive statistics and visualizations to identify the top albums, genres, and artists.
+   - Apply aggregation and sorting techniques to determine the top 10 entities based on various metrics.
 
 2. **Create a Recommendation System**:
-   - Develop a recommendation system using Content-based filtering to suggest music based on track name.
-   - Develop a recommendation system using Collaborative filtering to suggest music based on track name.
+   - **Content-based Filtering**:
+     - Prepare the data by extracting relevant features such as track name, album name, and genre.
+     - Create a TF-IDF matrix to represent the textual data numerically.
+     - Calculate cosine similarity between tracks to identify similar items.
+     - Develop a recommendation model using the similarity scores to suggest tracks.
+
+   - **Collaborative Filtering**:
+     - Encode categorical data such as track IDs and names into numerical values.
+     - Normalize the popularity scores to a standard range.
+     - Split the data into training and validation sets.
+     - Train a neural network model to learn user-item interactions and generate recommendations based on predicted popularity scores.
 
 # Data Understanding
 
@@ -108,16 +113,101 @@ The dataset can be downloaded from the following link:
 
 # Data Preparation
 
+The data preparation stage is crucial:
+- These steps ensure that the dataset is clean and ready for further analysis and modeling by removing missing values, duplicates, and unnecessary columns.
+
+## Step 1. **Check for NaN values**:
+   ```python
+   nan_counts = spotify_track_dataset.isnull().sum()
+   print("\nNaN counts per column:")
+   nan_counts
+   ```
+   This step checks for missing values (NaNs) in each column of the dataset and counts them. 
+
+## Step 2. **Display rows with NaN values**:
+   ```python
+   nan_rows = spotify_track_dataset[spotify_track_dataset.isnull().any(axis=1)]
+   print("Rows with NaN values:")
+   nan_rows
+   ```
+   This step identifies and displays the rows that contain any NaN values.
+
+## Step 3. **Drop rows with NaN values**:
+   ```python
+   spotify_track_dataset.dropna(inplace=True)
+   ```
+   This step removes all rows that contain NaN values from the dataset.
+
+## Step 4. **Check for duplicates**:
+   ```python
+   spotify_track_dataset.duplicated().sum()
+   ```
+   This step checks for duplicate rows in the dataset and counts them.
+
+## Step 5. **Drop unnecessary columns**:
+   ```python
+   spotify_track_dataset = spotify_track_dataset.drop(columns=["number"])
+   ```
+   This step removes columns that are not needed for the analysis, in this case, the "number" column.
+
+
 ## Content-based Filtering
 
-To implement content-based filtering, we will concentrate on the song titles and genres. Hence, we will extract the following four columns from the dataset:
+In Content-based Filtering, there are three main steps to prepare the data before implementing it with the model.
 
-- track_id
-- track_name
-- album_name
-- track_genre
+The data preparation stage is crucial because:
+- These columns collectively provide essential information for building a content-based recommendation system.
+- It transforms raw data into a structured format that is suitable for analysis and machine learning models.
+- Creating the TF-IDF matrix quantifies the text data, enabling numerical computations and similarity calculations.
+- Calculating cosine similarity helps in identifying the closeness between different tracks, which is the basis for making recommendations in content-based filtering.
 
-We apply the `TfidfVectorizer()` to the song genres to generate values ranging between 0 and 1. We then construct a dataframe where the vectorized genres (from `TfidfVectorizer()`) serve as columns, and the song titles are represented as rows. This step is necessary because content-based filtering utilizes cosine similarity, which requires numerical data for its calculations. An example of such a dataframe is illustrated in the table below.
+### Step 1: Prepare Content-based Data
+
+```python
+def data_preparation(self):
+    self.content_based_data = pd.DataFrame({
+        "track_id": self.dataset["track_id"].tolist(),
+        "track_name": self.dataset["track_name"].tolist(),
+        "album_name": self.dataset["album_name"].tolist(),
+        "track_genre": self.dataset["track_genre"].tolist()
+    })
+    print("Content Based Data:")
+    return self.content_based_data.head()
+```
+
+This step converts the dataset into a DataFrame with the relevant columns: `track_id`, `track_name`, `album_name`, and `track_genre`. The following output shown bellow:
+
+| track_id          | track_name                     | album_name                                      | track_genre |
+|-------------------|--------------------------------|------------------------------------------------|-------------|
+| 5SuOikwiRyPMVoIQDJUgSV | Comedy                         | Comedy                                           | acoustic    |
+| 4qPNDBW1i3p13qLCt0Ki3A | Ghost - Acoustic               | Ghost (Acoustic)                                 | acoustic    |
+| 1iJBSr7s7jYXzM8EGcbK5b | To Begin Again                 | To Begin Again                                   | acoustic    |
+| 6lfxq3CG4xtTiEg7opyCyx | Can't Help Falling In Love     | Crazy Rich Asians (Original Motion Picture Soundtrack) | acoustic    |
+| 5vjLSffimiIP26QG5WcN2K | Hold On                        | Hold On                                          | acoustic    |
+
+### Step 2: Create TF-IDF Matrix
+
+```python
+def create_tfidf_matrix(self):
+    self.tf = TfidfVectorizer()
+    self.tfidf_matrix = self.tf.fit_transform(self.content_based_data["track_genre"])
+    print("TF-IDF Matrix Shape:")
+    return self.tfidf_matrix.shape
+```
+
+This step creates a TF-IDF matrix from the `track_genre` column to represent the text data in a numerical format. The output for TF-IDF Matrix Shape is `(113999, 114)`, with 113,999 rows (tracks) and 114 columns (unique genres).
+
+### Step 3: Calculate Cosine Similarity
+
+```python
+def calculate_cosine_similarity(self):
+    cosine_sim = cosine_similarity(self.tfidf_matrix)
+    self.cosine_sim_df = pd.DataFrame(cosine_sim, index=self.content_based_data["track_name"], columns=self.content_based_data["track_name"])
+    print("Cosine Similarity DataFrame:")
+    return self.cosine_sim_df.head()
+```
+
+This step calculates the cosine similarity between tracks based on the TF-IDF matrix and stores the results in a DataFrame.
 
 Cosine Similarity DataFrame:
 
@@ -132,40 +222,50 @@ Cosine Similarity DataFrame:
 
 ## Collaborative Filtering
 
+In Collaborative Filtering, there are three main steps to prepare the data before implementing it with the model.
+
+The data preparation stage is crucial because:
+- **Encoding categorical data**: Converts categorical variables into numerical formats that can be processed by machine learning algorithms.
+- **Normalization**: Scales numerical features to a standard range, improving the performance and convergence of the model.
+- **Shuffling**: Ensures that the data is randomly distributed, reducing biases and improving the generalization of the model.
+- **Splitting data**: Separates the data into training and validation sets to evaluate the model's performance and prevent overfitting.
+
+### Step 1: Prepare Collaborative Filtering Data
+
 For collaborative filtering, we will also focus on the song titles and their genres. Unlike content-based filtering, we will only extract three columns from the dataset:
 
 - `track_id`
 - `track_name`
 - `popularity`
 
-Since `track_id` and `track_name` are strings and unique, we will encode these two columns. The resulting dataframe will contain the encoded `track_id`, encoded `track_name`, and `popularity` columns. An example of this, encode is shown in the code below.
+Since `track_id` and `track_name` are strings and unique, we will encode these two columns. The resulting dataframe will contain the encoded `track_id`, encoded `track_name`, and `popularity` columns.
+
+### Step 2: Encode Data
+
+a. **Encode categorical data**: Unique track IDs and track names are encoded into numerical values.
+b. **Map encoded values**: The dataset columns `track_id` and `track_name` are mapped to their encoded values.
+c. **Normalize the `popularity` column**: The popularity values are converted to a float type and then normalized to a range between 0 and 1.
+d. **Shuffle the dataset**: The dataset is shuffled to ensure random distribution.
+
+### Step 3: Split Data
 
 ```python
-    def encode_data(self):
-        track_ids = self.dataset["track_id"].unique().tolist()
-        self.track_to_track_encoded = {x: i for i, x in enumerate(track_ids)}
-        self.track_encoded_to_track = {i: x for i, x in enumerate(track_ids)}
+def get_splits(self, collaborative_based):
+   x = collaborative_based[["track", "name"]].values
+   y = collaborative_based["popularity"].values
 
-        track_names = self.dataset["track_name"].unique().tolist()
-        self.name_to_name_encoded = {x: i for i, x in enumerate(track_names)}
-        self.name_encoded_to_name = {i: x for i, x in enumerate(track_names)}
-
-        self.dataset["track"] = self.dataset["track_id"].map(self.track_to_track_encoded)
-        self.dataset["name"] = self.dataset["track_name"].map(self.name_to_name_encoded)
-
-        self.num_track = len(self.track_to_track_encoded)
-        self.num_name = len(self.name_encoded_to_name)
-
-        self.dataset["popularity"] = self.dataset["popularity"].values.astype(np.float32)
-        self.min_popularity = min(self.dataset["popularity"])
-        self.max_popularity = max(self.dataset["popularity"])
-
-        self.dataset["popularity"] = self.dataset["popularity"].apply(
-            lambda x: (x - self.min_popularity) / (self.max_popularity - self.min_popularity)
-        )
-
-        return self.dataset.sample(frac=1, random_state=42)
+   train_indices = int(0.8 * collaborative_based.shape[0])
+   x_train, x_val, y_train, y_val = (
+      torch.tensor(x[:train_indices], dtype=torch.long),
+      torch.tensor(x[train_indices:], dtype=torch.long),
+      torch.tensor(y[:train_indices], dtype=torch.float32),
+      torch.tensor(y[train_indices:], dtype=torch.float32)
+   )
+   return x_train, x_val, y_train, y_val
 ```
+
+- **Extract features and labels**: The features (`track` and `name`) and labels (`popularity`) are separated.
+- **Split into training and validation sets**: 80% of the data is used for training and 20% for validation.
 
 # Modeling and Result
 
@@ -179,9 +279,9 @@ ContentBasedModel(
 )
 ```
 
-First of all, a model named `ContentBasedModel` is created using PyTorch [1]. This model initializes with an input dimension and contains three fully connected layers. The forward pass of the model applies ReLU activation to the first two layers and outputs the result from the final layer.
+First of all, a model named `ContentBasedModel` is created using PyTorch. This model initializes with an input dimension and contains three fully connected layers. The forward pass of the model applies ReLU activation to the first two layers and outputs the result from the final layer.
 
-Next, a `ContentBasedRecommender` class is defined to handle dataset operations. Upon initialization, it takes a dataset and sets up placeholders for the model, TF-IDF matrix, and cosine similarity DataFrame. The `data_preparation` method organizes the dataset into a DataFrame, keeping track of important columns like track IDs, names, album names, and genres. In the `create_tfidf_matrix` method, a TF-IDF matrix is generated from the track genres using the `TfidfVectorizer` [2], providing a numerical representation of the textual data. The `calculate_cosine_similarity` method computes the cosine similarity between tracks based on the TF-IDF matrix, storing the results in a DataFrame for easy lookup. The `initialize_model` method sets the input dimension for the model based on the shape of the TF-IDF matrix and initializes the `ContentBasedModel`. The `train_model` method converts the TF-IDF matrix to a tensor and defines a dummy target variable. It uses mean squared error loss and Adam optimizer to train the model over a specified number of epochs, printing the loss every ten epochs.
+Next, a `ContentBasedRecommender` class is defined to handle dataset operations. Upon initialization, it takes a dataset and sets up placeholders for the model, TF-IDF matrix, and cosine similarity DataFrame. The `data_preparation` method organizes the dataset into a DataFrame, keeping track of important columns like track IDs, names, album names, and genres. In the `create_tfidf_matrix` method, a TF-IDF matrix is generated from the track genres using the `TfidfVectorizer`, providing a numerical representation of the textual data. The `calculate_cosine_similarity` method computes the cosine similarity between tracks based on the TF-IDF matrix, storing the results in a DataFrame for easy lookup. The `initialize_model` method sets the input dimension for the model based on the shape of the TF-IDF matrix and initializes the `ContentBasedModel`. The `train_model` method converts the TF-IDF matrix to a tensor and defines a dummy target variable. It uses mean squared error loss and Adam optimizer to train the model over a specified number of epochs, printing the loss every ten epochs.
 
 Finally, the `get_recommendations` method retrieves the top `k` similar tracks to a given track name using the precomputed cosine similarity DataFrame and returns the recommendations. Here's example:
 
@@ -212,9 +312,9 @@ Recommendations:
 
 ## Collaborative Filtering
 
-First of all, we initialize the DataPreprocessor class to handle data encoding and normalization. This class maps unique track IDs and track names to numerical encodings and scales the popularity values [3].
+First of all, we initialize the DataPreprocessor class to handle data encoding and normalization. This class maps unique track IDs and track names to numerical encodings and scales the popularity values.
 
-Next, we define the RecommenderNet class, a neural network model with embedding layers for both tracks and track names, which helps capture latent features [4]. The forward method computes the dot product of these embeddings and adds biases, applying a sigmoid activation function to produce the final output. We then set up the Trainer class to handle the training of the model. This class manages the training loop, calculating the Root Mean Squared Error (RMSE) for both training and validation datasets, and prints the RMSE every ten epochs [5]. The plot_rmse function is used to visualize the training and validation RMSE over epochs, helping to monitor the model’s performance and evaluate [6].
+Next, we define the RecommenderNet class, a neural network model with embedding layers for both tracks and track names, which helps capture latent features. The forward method computes the dot product of these embeddings and adds biases, applying a sigmoid activation function to produce the final output. We then set up the Trainer class to handle the training of the model. This class manages the training loop, calculating the Root Mean Squared Error (RMSE) for both training and validation datasets, and prints the RMSE every ten epochs. The plot_rmse function is used to visualize the training and validation RMSE over epochs, helping to monitor the model’s performance and evaluate.
 
 Finally, the RecommenderSystem class is responsible for generating track recommendations. It takes a track name, encodes it, and computes the predicted popularity for all tracks, returning the top recommendations based on these predictions. Utility functions like get_data_loaders assist in creating data loaders for training and validation. Here's example:
 
@@ -283,16 +383,4 @@ These values indicate a slight improvement in the model's performance over time,
 
 # References
 
-[1] PyTorch Documentation. Available: https://pytorch.org/docs/stable/index.html
-
-[2] scikit-learn Documentation. Available: https://scikit-learn.org/stable/modules/feature_extraction.html#tfidf-term-weighting
-
-[3] scikit-learn Documentation. Available: https://scikit-learn.org/stable/modules/preprocessing.html
-
-[4] S. Banerjee, "Collaborative Filtering for Movie Recommendations," Keras, 2020. Available: https://keras.io/examples/structured_data/collaborative_filtering_movielens/
-
-[5] A. Tam, "Understand Model Behavior During Training by Visualizing Metrics," MachineLearningMastery.com, 2023. Available: https://machinelearningmastery.com/understand-model-behavior-during-training-by-visualizing-metrics/
-
-[6] MathWorks, "Specify Training Options in Custom Training Loop," MathWorks Documentation. Available: https://www.mathworks.com/help/deeplearning/ug/specify-training-options-in-custom-training-loop.html
-
-[7] T. D. Setiani and M. R. Ardhanie, "Machine Learning Terapan," Dicoding Indonesia. [Online]. Available: https://www.dicoding.com/academies/319. [Accessed: Dec. 1, 2024]
+T. D. Setiani and M. R. Ardhanie, "Machine Learning Terapan," Dicoding Indonesia. [Online]. Available: https://www.dicoding.com/academies/319. [Accessed: Dec. 1, 2024]
