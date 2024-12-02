@@ -436,14 +436,14 @@ The planned solution has a significant impact, as it not only addresses the prob
 
 # References
 
-## [1] Atlanta Institute of Music and Media, "How Streaming Changed The Music Industry," Atlanta Institute of Music and Media, June 28, 2024. [Online]. Available: [https://aimm.edu/blog/how-streaming-changed-the-music-industry](https://aimm.edu/blog/how-streaming-changed-the-music-industry). [Accessed: December 2, 2024].
+#### [1] Atlanta Institute of Music and Media, "How Streaming Changed The Music Industry," Atlanta Institute of Music and Media, June 28, 2024. [Online]. Available: [https://aimm.edu/blog/how-streaming-changed-the-music-industry](https://aimm.edu/blog/how-streaming-changed-the-music-industry). [Accessed: December 2, 2024].
 
-## [2] GeeksforGeeks, "Music Recommendation System Using Machine Learning," GeeksforGeeks, November 1, 2022. [Online]. Available: [https://www.geeksforgeeks.org/music-recommendation-system-using-machine-learning/](https://www.geeksforgeeks.org/music-recommendation-system-using-machine-learning/). [Accessed: December 2, 2024].
+#### [2] GeeksforGeeks, "Music Recommendation System Using Machine Learning," GeeksforGeeks, November 1, 2022. [Online]. Available: [https://www.geeksforgeeks.org/music-recommendation-system-using-machine-learning/](https://www.geeksforgeeks.org/music-recommendation-system-using-machine-learning/). [Accessed: December 2, 2024].
 
-## [3] PyTorch, "MSELoss — PyTorch 2.5 documentation," PyTorch, 2023. [Online]. Available: [https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html](https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html). [Accessed: December 2, 2024].
+#### [3] PyTorch, "MSELoss — PyTorch 2.5 documentation," PyTorch, 2023. [Online]. Available: [https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html](https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html). [Accessed: December 2, 2024].
 
-## [4] A. Tam, "Loss Functions in PyTorch Models," Machine Learning Mastery, April 8, 2023. [Online]. Available: [https://machinelearningmastery.com/loss-functions-in-pytorch-models/](https://machinelearningmastery.com/loss-functions-in-pytorch-models/). [Accessed: December 2, 2024].
+#### [4] A. Tam, "Loss Functions in PyTorch Models," Machine Learning Mastery, April 8, 2023. [Online]. Available: [https://machinelearningmastery.com/loss-functions-in-pytorch-models/](https://machinelearningmastery.com/loss-functions-in-pytorch-models/). [Accessed: December 2, 2024].
 
-## [5] GeeksforGeeks, "Mean Squared Error," GeeksforGeeks, August 13, 2024. [Online]. Available: [https://www.geeksforgeeks.org/mean-squared-error/](https://www.geeksforgeeks.org/mean-squared-error/). [Accessed: December 2, 2024].
+#### [5] GeeksforGeeks, "Mean Squared Error," GeeksforGeeks, August 13, 2024. [Online]. Available: [https://www.geeksforgeeks.org/mean-squared-error/](https://www.geeksforgeeks.org/mean-squared-error/). [Accessed: December 2, 2024].
 
-## [6] Z. Bobbitt, "How to Interpret Root Mean Square Error (RMSE)," Statology, May 10, 2021. [Online]. Available: [https://www.statology.org/how-to-interpret-rmse/](https://www.statology.org/how-to-interpret-rmse/). [Accessed: December 2, 2024].
+#### [6] Z. Bobbitt, "How to Interpret Root Mean Square Error (RMSE)," Statology, May 10, 2021. [Online]. Available: [https://www.statology.org/how-to-interpret-rmse/](https://www.statology.org/how-to-interpret-rmse/). [Accessed: December 2, 2024].
