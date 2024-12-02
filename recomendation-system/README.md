@@ -5,7 +5,7 @@
 # Project Overview
 
 ## Background
-In the era of digital music streaming, the sheer volume of available tracks can be overwhelming for users. Music recommendation systems have become essential tools for helping users discover new music that aligns with their tastes. These systems analyze user preferences and listening habits to suggest tracks, artists, and albums that users are likely to enjoy.
+In the era of digital music streaming[1], the sheer volume of available tracks can be overwhelming for users. Music recommendation systems have become essential tools for helping users discover new music that aligns with their tastes[2]. These systems analyze user preferences and listening habits to suggest tracks, artists, and albums that users are likely to enjoy.
 
 ## Importance
 Completing this project is crucial for several reasons:
@@ -346,7 +346,7 @@ Recommendations based on track name: 'Fire - Killer Hertz Remix'
 
 ## Content-Based Filtering
 
-The evaluation metrics used in this project include Mean Squared Error (MSE) Loss. MSE is calculated as the average squared difference between the predicted values and the actual values. The formula for MSE is:
+The evaluation metrics used in this project include Mean Squared Error (MSE) Loss[3]. MSE is calculated as the average squared difference between the predicted values and the actual values[4]. The formula for MSE is[5]:
 
 $$ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$
 
@@ -369,7 +369,7 @@ Based on the evaluation metrics, the project outcomes can be described by the pr
 
 ## Collaborative Filtering
 
-The evaluation metric used in this project is Root Mean Squared Error (RMSE). RMSE is calculated as the square root of the average of the squared differences between the predicted values and the actual values. The formula for RMSE is:
+The evaluation metric used in this project is Root Mean Squared Error (RMSE). RMSE is calculated as the square root of the average of the squared differences between the predicted values and the actual values. The formula for RMSE is[6]:
 
 $$RMSE = \sqrt{\frac{\sum_{i=1}^n{(y_i - \hat{y_i})}^2}{N}}$$
 
@@ -436,4 +436,14 @@ The planned solution has a significant impact, as it not only addresses the prob
 
 # References
 
-T. D. Setiani and M. R. Ardhanie, "Machine Learning Terapan," Dicoding Indonesia. [Online]. Available: https://www.dicoding.com/academies/319. [Accessed: Dec. 1, 2024]
+## [1] Atlanta Institute of Music and Media, "How Streaming Changed The Music Industry," Atlanta Institute of Music and Media, June 28, 2024. [Online]. Available: [https://aimm.edu/blog/how-streaming-changed-the-music-industry](https://aimm.edu/blog/how-streaming-changed-the-music-industry). [Accessed: December 2, 2024].
+
+## [2] GeeksforGeeks, "Music Recommendation System Using Machine Learning," GeeksforGeeks, November 1, 2022. [Online]. Available: [https://www.geeksforgeeks.org/music-recommendation-system-using-machine-learning/](https://www.geeksforgeeks.org/music-recommendation-system-using-machine-learning/). [Accessed: December 2, 2024].
+
+## [3] PyTorch, "MSELoss — PyTorch 2.5 documentation," PyTorch, 2023. [Online]. Available: [https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html](https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html). [Accessed: December 2, 2024].
+
+## [4] A. Tam, "Loss Functions in PyTorch Models," Machine Learning Mastery, April 8, 2023. [Online]. Available: [https://machinelearningmastery.com/loss-functions-in-pytorch-models/](https://machinelearningmastery.com/loss-functions-in-pytorch-models/). [Accessed: December 2, 2024].
+
+## [5] GeeksforGeeks, "Mean Squared Error," GeeksforGeeks, August 13, 2024. [Online]. Available: [https://www.geeksforgeeks.org/mean-squared-error/](https://www.geeksforgeeks.org/mean-squared-error/). [Accessed: December 2, 2024].
+
+## [6] Z. Bobbitt, "How to Interpret Root Mean Square Error (RMSE)," Statology, May 10, 2021. [Online]. Available: [https://www.statology.org/how-to-interpret-rmse/](https://www.statology.org/how-to-interpret-rmse/). [Accessed: December 2, 2024].
