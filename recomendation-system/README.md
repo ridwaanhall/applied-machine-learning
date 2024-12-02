@@ -62,7 +62,7 @@ To achieve these goals, we propose the following steps:
 # Data Understanding
 
 ## Data Overview
-The dataset used in this project contains 114,000 rows and 21 columns. The data includes various features such as track ID, artists, album name, track name, popularity, duration, explicit content indicator, and several audio features.
+The dataset used in this project contains 114,000 rows and 21 columns. The data includes various features such as number, track ID, artists, album name, track name, popularity, duration, explicit content indicator, and several audio features. Total number of NaN values: 3, with Detailed NaN locations: Row 65900 at Column `artists`; Row 65900 at Column `album_name`; Row 65900 at Column `track_name`. No duplicate detected.
 
 ## Data Source
 The dataset can be downloaded from the following link:
@@ -92,6 +92,30 @@ The dataset can be downloaded from the following link:
 | time_signature    | Time signature of the track, indicating the number of beats per measure, e.g., 4 represents a 4/4 time signature |
 | track_genre       | Genre of the track                                                         |
 
+## Data Cleaning
+
+### Step 1. **Check for NaN values**:
+   ```python
+   nan_counts = spotify_track_dataset.isnull().sum()
+   print("\nNaN counts per column:")
+   nan_counts
+   ```
+   This step checks for missing values (NaNs) in each column of the dataset and counts them.
+
+### Step 2. **Display rows with NaN values**:
+   ```python
+   nan_rows = spotify_track_dataset[spotify_track_dataset.isnull().any(axis=1)]
+   print("Rows with NaN values:")
+   nan_rows
+   ```
+   This step identifies and displays the rows that contain any NaN values.
+
+### Step 3. **Check for duplicates**:
+   ```python
+   spotify_track_dataset.duplicated().sum()
+   ```
+   This step checks for duplicate rows in the dataset and counts them.
+
 ## Data Visualization and Insights
 - **Distribution of Explicit Lyrics Songs**: 8.55% of the songs in the dataset have explicit lyrics.
 ![Distribution of Explicit Lyrics Songs](images/distribution_explicit_songs.png)
@@ -116,35 +140,13 @@ The dataset can be downloaded from the following link:
 The data preparation stage is crucial:
 - These steps ensure that the dataset is clean and ready for further analysis and modeling by removing missing values, duplicates, and unnecessary columns.
 
-## Step 1. **Check for NaN values**:
-   ```python
-   nan_counts = spotify_track_dataset.isnull().sum()
-   print("\nNaN counts per column:")
-   nan_counts
-   ```
-   This step checks for missing values (NaNs) in each column of the dataset and counts them. 
-
-## Step 2. **Display rows with NaN values**:
-   ```python
-   nan_rows = spotify_track_dataset[spotify_track_dataset.isnull().any(axis=1)]
-   print("Rows with NaN values:")
-   nan_rows
-   ```
-   This step identifies and displays the rows that contain any NaN values.
-
-## Step 3. **Drop rows with NaN values**:
+## Step 1. **Drop rows with NaN values**:
    ```python
    spotify_track_dataset.dropna(inplace=True)
    ```
    This step removes all rows that contain NaN values from the dataset.
 
-## Step 4. **Check for duplicates**:
-   ```python
-   spotify_track_dataset.duplicated().sum()
-   ```
-   This step checks for duplicate rows in the dataset and counts them.
-
-## Step 5. **Drop unnecessary columns**:
+## Step 2. **Drop unnecessary columns**:
    ```python
    spotify_track_dataset = spotify_track_dataset.drop(columns=["number"])
    ```
@@ -384,6 +386,29 @@ These values indicate a slight improvement in the model's performance over time,
 ## Analysis of Impact on Business Understanding
 
 The evaluation of the project, while technically successful, must also be analyzed in terms of its impact on **Business Understanding** as per the problem statements and goals.
+
+---
+
+### Results of Top 10 Analysis
+
+The Top 10 analysis provides valuable insights into the music dataset, highlighting popular albums, genres, and artists based on various metrics. Here are the key findings:
+
+1. **Top 10 Albums with Most Songs**:
+   - "Alternative Christmas 2022" has the most songs with over 175 tracks.
+
+2. **Top 10 Music Genres Based on Highest Average Popularity**:
+   - Pop-film is the most popular genre on average with a score of 59.3.
+
+3. **Top 10 Genres with the Highest Number of Unique Artists**:
+   - Dubstep has the highest number of unique artists among the top 10 genres, with around 650 artists.
+
+4. **Top 10 Artists by Average Popularity Score**:
+   - Sam Smith/Kim Petras and Bizarrap/Quevedo have the highest average popularity scores, both scoring over 90 points.
+
+5. **Top 10 Artists by Number of Tracks**:
+   - The Beatles have the highest number of tracks at over 200.
+
+These insights can inform marketing strategies, strategic collaborations, and content curation, ultimately enhancing user engagement and satisfaction on the music platform.
 
 ---
 
