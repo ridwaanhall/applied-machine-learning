@@ -16,6 +16,8 @@ Completing this project is crucial for several reasons:
 
 ## Research and References
 
+Research and references at the bottom on this MD
+
 # Business Understanding
 
 ## Problem Statements
